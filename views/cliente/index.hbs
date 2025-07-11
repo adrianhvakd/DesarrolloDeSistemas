@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proy Crud</title>
+</head>
+<body>
+    <h1>Lista Cliente</h1>
+    <a href="/cliente/formcliente">Nuevo</a>
+    <table>
+        <tr>
+            <th>CI</th>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Celular</th>
+            <th>Acciones</th>
+        </tr>
+        {{#each items}}
+        <tr>
+            <td>{{this.ci}}</td>
+            <td>{{this.nombre}}</td>
+            <td>{{this.apellidos}}</td>
+            <td>{{this.cel}}</td>
+            <td>
+                <a href="/cliente/edit/{{this.id}}">edit</a>
+                <a href="/cliente/edit/{{this.id}}">borrar</a>
+            </td>
+        </tr>
+        {{/each}}
+    </table>
+</body>
+</html>
