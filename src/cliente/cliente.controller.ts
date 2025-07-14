@@ -1,5 +1,7 @@
-import { Controller, Get, Param, Post, Redirect, Render } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Redirect, Render, Res } from '@nestjs/common';
 import { ClienteService } from './cliente.service';
+import { Response } from 'express';
+import { ClienteNuevoDto } from './dtos/clienteNuevo.dto';
 
 @Controller('cliente')
 export class ClienteController {
@@ -13,13 +15,19 @@ export class ClienteController {
     }
     //crear -form
     @Get('/formcliente')
-    @Render('cliente/form1')
+    @Render('cliente/form')
     form(){}
     //crear -storage
     @Post('')
-    create(){}
+    async create(@Body() cliente:ClienteNuevoDto,@Res() res:Response){
+        let respuesta = await this.clienteService.createc(cliente)
+        if(respuesta)
+            return res.redirect('/cliente')
+        else
+            return res.redirect('/cliente/formcliente')
+    }
     //crear -editar
-    @Get('/form/:id')
+    @Get('/formedit/:id')
     @Render('cliente/form')
     async formEdit(@Param('id') id: string){
         let item = await this.clienteService.getById(id);
@@ -30,9 +38,9 @@ export class ClienteController {
     update(){}
     //delete
     @Get('/delete/:id')
-    @Redirect('../')
+    @Redirect('/cliente')
     async delete(@Param('id') id: string) {
-        await this.clienteService.delete(id);
+        let result = await this.clienteService.delete(id);
         
     }
 }

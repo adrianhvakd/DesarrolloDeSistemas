@@ -6,15 +6,18 @@
     <title>Document</title>
 </head>
 <body>
-    <form>
+    <form action="/cliente/" method="Post">
         <label>CI</label>
-        <input type="number" value={{this.ci}}>
+        <input type="number" name="ci" value={{this.ci}}>
         <label>Nombre</label>
-        <input type="text" value={{this.nombre}}>
+        <input type="text" name="nombre" value={{this.nombre}}>
         <label>Apellido</label>
-        <input type="text" value={{this.apellidos}}>
+        <input type="text" name="apellidos" value={{this.apellidos}}>
         <label>Celular</label>
-        <input type="number" value={{this.cel}}>
+        <input type="number" name="cel" value={{this.cel}}>
+
+        <input type="reset" value="Limpiar">
+        <input type="submit" value="Enviar">
     </form>
 </body>
 </html>
