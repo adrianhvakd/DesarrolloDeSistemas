@@ -24,7 +24,7 @@
             <td>{{this.cel}}</td>
             <td>
                 <a href="/cliente/edit/{{this.id}}">edit</a>
-                <a href="/cliente/edit/{{this.id}}">borrar</a>
+                <a href="/cliente/delete/{{this.id}}" onclick="return confirm('¿Estás seguro de borrar este cliente?')">borrar</a>
             </td>
         </tr>
         {{/each}}

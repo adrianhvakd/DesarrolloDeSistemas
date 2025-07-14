@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Render } from '@nestjs/common';
+import { Controller, Get, Param, Post, Render } from '@nestjs/common';
 import { ClienteService } from './cliente.service';
 
 @Controller('cliente')
@@ -27,5 +27,7 @@ export class ClienteController {
     update(){}
     //delete
     @Get('/delete/:id')
-    delete(){}
+    async delete(@Param('id') id: string) {
+        await this.clienteService.delete(id);
+    }
 }

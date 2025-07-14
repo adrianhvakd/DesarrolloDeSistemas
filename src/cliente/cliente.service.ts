@@ -7,7 +7,7 @@ import { Repository } from 'typeorm';
 export class ClienteService {
 
     constructor(@InjectRepository(ClienteEntity)
-    private ClienteRepository: Repository<ClienteEntity>,)
+    private ClienteRepository: Repository<ClienteEntity>)
     {}
 
     public async getAll(){
@@ -22,14 +22,12 @@ export class ClienteService {
         return respuesta.affected??0>=1?true:false
 
     }
-    public async delete(id){
+    public async delete(id: string): Promise<boolean> {
         let respuesta = await this.ClienteRepository.delete(id);
-        return respuesta.affected??0>=1?true:false
+        return (respuesta.affected ?? 0) >= 1;
     }
-    public async getById(id) {
-        return this.ClienteRepository.findOne(id);
+    public async getById(id: string): Promise<ClienteEntity | null> {
+        return await this.ClienteRepository.findOne({ where: { id } });
     }
-
-
 
 }
