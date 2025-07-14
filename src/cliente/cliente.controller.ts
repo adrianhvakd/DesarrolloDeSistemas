@@ -19,9 +19,12 @@ export class ClienteController {
     @Post('')
     create(){}
     //crear -editar
-    @Get('/formclienteedit')
+    @Get('/form/:id')
     @Render('cliente/form')
-    formEdit(){}
+    async formEdit(@Param('id') id: string){
+        let item = await this.clienteService.getById(id);
+        return item;
+    }
     //crear -storage
     @Post('/edit/:id')
     update(){}
