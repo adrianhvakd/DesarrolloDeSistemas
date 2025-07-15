@@ -6,7 +6,7 @@
     <title>Formulario</title>
 </head>
 <body>
-    <form id="clienteForm" action="/cliente/" method="Post">
+    <form id="clienteForm" action="/cliente/{{#if id}}edit/{{id}}{{/if}}" method="Post">
         <label>CI</label>
         <input type="number" name="ci" value="{{this.ci}}" required>
         
@@ -20,17 +20,19 @@
         <input type="number" name="cel" value="{{this.cel}}" required>
         
         <button type="reset">Limpiar</button>
-        <input type="submit" id="submitBtn" value="Guardar"/>
+        <input type="submit" value="Guardar"/>
     </form>
-    
-    <div id="errors"></div>
+    <br>
+    <div id="errors">
+        {{this.respuesta}}
+    </div>
     
     <script>
         document.getElementById('clienteForm').onsubmit = function(e) {
             e.preventDefault();
             document.getElementById('errors').style.display = 'none';
             
-            fetch('/cliente', {
+            fetch('/cliente/{{#if id}}edit/{{id}}{{/if}}', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(Object.fromEntries(new FormData(this)))
@@ -39,7 +41,6 @@
                 document.getElementById('errors').innerHTML = d.message.join('<br>');
                 document.getElementById('errors').style.display = 'block';
             }))
-            .catch(() => {});
         };
     </script>
 </body>

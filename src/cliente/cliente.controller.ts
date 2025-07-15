@@ -35,7 +35,15 @@ export class ClienteController {
     }
     //crear -storage
     @Post('/edit/:id')
-    update(){}
+    async update(@Body() updateCliente, @Param('id') id:string, @Res() res:Response){
+        let respuesta = await this.clienteService.edit(updateCliente,id);
+        if(respuesta)
+            return res.redirect('/cliente/')
+        else{
+            //mostrar el error
+        }    
+            
+    }
     //delete
     @Get('/delete/:id')
     @Redirect('/cliente')
