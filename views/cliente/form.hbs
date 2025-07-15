@@ -1,23 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Formulario</title>
 </head>
 <body>
-    <form action="/cliente/" method="Post">
+    <form id="clienteForm" action="/cliente/" method="Post">
         <label>CI</label>
-        <input type="number" name="ci" value={{this.ci}}>
+        <input type="number" name="ci" value="{{this.ci}}" required>
+        
         <label>Nombre</label>
-        <input type="text" name="nombre" value={{this.nombre}}>
+        <input type="text" name="nombre" value="{{this.nombre}}" required>
+        
         <label>Apellido</label>
-        <input type="text" name="apellidos" value={{this.apellidos}}>
+        <input type="text" name="apellidos" value="{{this.apellidos}}" required>
+        
         <label>Celular</label>
-        <input type="number" name="cel" value={{this.cel}}>
-
-        <input type="reset" value="Limpiar">
-        <input type="submit" value="Enviar">
+        <input type="number" name="cel" value="{{this.cel}}" required>
+        
+        <button type="reset">Limpiar</button>
+        <input type="submit" id="submitBtn" value="Guardar"/>
     </form>
+    
+    <div id="errors"></div>
+    
+    <script>
+        document.getElementById('clienteForm').onsubmit = function(e) {
+            e.preventDefault();
+            document.getElementById('errors').style.display = 'none';
+            
+            fetch('/cliente', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(Object.fromEntries(new FormData(this)))
+            })
+            .then(r => r.ok ? window.location.href = '/cliente' : r.json().then(d => {
+                document.getElementById('errors').innerHTML = d.message.join('<br>');
+                document.getElementById('errors').style.display = 'block';
+            }))
+            .catch(() => {});
+        };
+    </script>
 </body>
 </html>
