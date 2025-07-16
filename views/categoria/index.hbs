@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h1>Catgoria</h1>
+    <a href="/categoria/formnuevo">nuevo</a>
+    <table>
+        <tr>
+            <th>nombre</th>
+            <th>foto</th>
+            <th>acciones</th>
+        </tr>
+        {{#each items}}
+        <tr>
+            <td>{{this.nombre}}</td>
+            <td><img src="{{this.foto}}" alt=""></td>
+            <td><a href="/categoria/editform/{{this.id}}">🧨</a></td>
+            <td><a onclick="return confirm('esta seguro de borrar')" href="/categoria/delete/{{this.id}}">😢</a></td>
+        </tr>
+        {{/each}}
+    </table>
+</body>
+</html>
