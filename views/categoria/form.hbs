@@ -8,10 +8,9 @@
 <body>
     <h1>Nueva categorias</h1>
 
-    <form action="/categoria/" method="post">
-
-        <input type="text" name="nombre" id="nombre" placeholder="nombre">
-        <input type="file" name="foto" id="foto" placeholder="foto">
+    <form action="/categoria/{{#if id}}edit/{{id}}{{/if}}" method="post">
+        <input type="text" name="nombre" id="nombre" placeholder="nombre" value="{{this.nombre}}">
+        <input type="file" name="foto" id="foto" placeholder="foto" value="{{this.foto}}">
         <input type="submit" value="Enviar">
     </form>
 </body>

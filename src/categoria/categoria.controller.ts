@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Param, Post, Render, Res } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Redirect, Render, Res } from '@nestjs/common';
 import { CategoriaService } from './categoria.service';
 import { Response } from 'express';
+import { nuevoCategoriadto } from './dtos/nuevoCategoria.dto';
 
 @Controller('categoria')
 export class CategoriaController {
@@ -18,8 +19,7 @@ export class CategoriaController {
     nuevoform(){ }
 
     @Post('')
-
-    async nuevo(@Body() categoria,@Res() res:Response){
+    async nuevo(@Body() categoria:nuevoCategoriadto,@Res() res:Response){
         let respuesta = await this.categoriaService.create(categoria);
         if(respuesta)
             return res.redirect('/categoria')
@@ -27,11 +27,22 @@ export class CategoriaController {
 
     @Get('/editform/:id')
     @Render('categoria/form')
-    editform(@Param() {id}){}
+    async editform(@Param() {id}){
+        let respuesta = await this.categoriaService.getById(id);
+        return respuesta;
+    }
 
     @Post('/edit/:id')
-    edit(@Param() {id},@Body() nuevo){}
+    async edit(@Param() {id},@Body() nuevo:nuevoCategoriadto,@Res() res:Response){
+        let respuesta = await this.categoriaService.update(id,nuevo);
+        if(respuesta)
+            return res.redirect('/categoria')
+    }
 
     @Get('/delete/:id')
-    borrar(@Param() {id}){}
+    @Redirect('/categoria/')
+    async borrar(@Param() {id}){
+        let respuesta = await this.categoriaService.delete(id);
+        
+    }
 }
